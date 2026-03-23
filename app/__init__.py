@@ -1,5 +1,4 @@
 from flask import Flask
-from app import routes
 from dotenv import load_dotenv
 import os
 
@@ -7,8 +6,11 @@ load_dotenv()
 
 app = Flask(__name__)
 
-SECRET_KEY = os.getenv("SECRET_KEY")
-if SECRET_KEY is None:
+secret_key = os.getenv("SECRET_KEY")
+if secret_key is None:
     raise ValueError("SECRET_KEY не задан в .env")
 
-app.config['SECRET_KEY'] = SECRET_KEY
+app.config["SECRET_KEY"] = secret_key
+
+# ВАЖНО: импорт маршрутов В КОНЦЕ файла
+from app import routes  # именно так, чтобы index был зарегистрирован
